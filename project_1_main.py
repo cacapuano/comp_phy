@@ -1,3 +1,4 @@
+# runga kutta method of intergration
 #just importing packages
 from matplotlib import pyplot
 import numpy 
