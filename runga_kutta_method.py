@@ -44,4 +44,6 @@ for i in range(steps -1):
     k4_omega = dt * (-g/L * np.sin(theta + 0.5 * k3_theta))
 
     #update array with new theta and omega
-    theta_val[i + 1] = theta + (1/6) * (k1_theta
+    theta_val[i + 1] = theta + (1/6) * (k1_theta + 2*k2_theta + 2*k3_theta + k4_theta)
+    omega_val[i + 1] = omega + (1/6) * (k1_omega + 2*k2_omega + 2*k3_omega + k4_omega)
+
