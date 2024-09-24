@@ -4,12 +4,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #constants
-e_0 = 
-q = 
-r = 
+e_0 = 2 
+q = 1e-6 # charge of the conducting sphere coulombs
+r = 1
 
 #integration parameters
-a = 0 #lower limit of integration
+a = 1 #lower limit of integration
 b = 10 #upper limit of integration
 intervals = 1000 #steps
 
@@ -21,17 +21,16 @@ def work(r,q):
 #trapezoidal rule method
 def trapezoidal_rule(f, a, b, n, q):
     h = (b-a)/n #width of interval
-    integral = 0.5 * (f(a, Q) + f(b, Q))
+    integral = 0.5 * (work(a, q) + work(b, q))
 
     for i in range(1 , n):
         x_i = a + i * h
-        integral += f(x_i , q)
+        integral += work(x_i , q)
     
     integral *= h
     return integral
 
-#simpson's method
-def simpsons_method():
+print(f"Work done to move the conducting sphere: {integral} J")
 
 
 
