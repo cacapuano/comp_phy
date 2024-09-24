@@ -4,9 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #constants
-e_0 = 2 
-q = 1e-6 # charge of the conducting sphere coulombs
-r = 1
+e_0 = 8.85e-12 #C^2/Nm^2 permittivity of free space
+q = 1e-6 # coulombs - charge of the conducting sphere
+r = 3e-3 # radius of the sphere m
 
 #integration parameters
 a = 1 #lower limit of integration
