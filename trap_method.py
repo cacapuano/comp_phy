@@ -15,8 +15,9 @@ intervals = 1000 #steps
 
 #work done moving conducting sphere integral
 def work(r,q):
-    epislon_0 = 8.85e-12
-    return (epsilon_0/2)((1 / (4 * np.pi * epsilon_0)) * (q / r**2)**2)
+    e_0 = 8.85e-12
+    return (e_0/2)((1 / (4 * np.pi * e_0)) * (q / r**2)**2)
+work(r,q)
 
 #trapezoidal rule method
 def trapezoidal_rule(f, a, b, n, q):
@@ -29,6 +30,7 @@ def trapezoidal_rule(f, a, b, n, q):
     
     integral *= h
     return integral
+trapezoidal_rule(f, a, b, n, q)
 
 print(f"Work done to move the conducting sphere: {integral} J")
 
