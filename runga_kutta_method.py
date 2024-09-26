@@ -7,9 +7,8 @@ import numpy as np
 mass = 10 #kg; mass on the pendulum
 length = 1 #m; length of the string
 g = 9.81 #m/s^2; gravity!
-init_theta = np.pi/4 #initial angle
-init_omega = 0.0 #starting velocity
 
+# equations for the pendulum
 def pendulum_functions(t, position):
     theta = position
     omega = position
@@ -20,45 +19,53 @@ def pendulum_functions(t, position):
     
 
 #initial conditions
-theta_val[0] = init_theta
-omega_val[0] = init_omega
+init_theta = np.pi/4 #initial angle
+init_omega = 0.0 #starting velocity
 
 #time parameters
 dt = 0.01
+init_time = 0.0 # seconds
 max_time = 20
-steps = int(max_time/dt)
-
-#arrays
-time_val = np.linspace(0, max_time, steps)
-theta_val = []
-omega_val = []
 
 
-for i in range(steps -1):
-    theta = theta_val[i] # current theta value
-    omega = omega_val[i] # current omega value
+# vector array
+y_0 = np.array([init_theta, init_omega])
 
-    # runga kutta
-    k1_theta = omega * dt 
-    k1_omega = dt * (-g/L * np.sin(theta))
 
-    k2_theta = dt * (omega + 0.5 * k1_omega)
-    k2_omega = dt * (-g/L * np.sin(theta + 0.5 * k1_theta))
+# defining the runga-kutta method to the 4th order
+def runga_kutta(function, y_0, init_time, max_time, dt):
+    time_val = np.arange(init_time, max_time, dt)
+    y_val = np.zeros((len(time_val), len(y_0)))
+    y_val[0] = y_0
 
-    k3_theta = dt * (omega + 0.5 * k2_omega)
-    k3_omega = dt * (-g/L * np.sin(theta + 0.5 * k2_theta))
+    for i in range(steps -1):
+        time = time_val[i-1] 
+        y = y_val[i-1]
 
-    k4_theta =  dt * (omega + 0.5 * k3_omega)
-    k4_omega = dt * (-g/L * np.sin(theta + 0.5 * k3_theta))
+        # runga-kutta coeffients
+        k1 = function(t, y)
+        k2 = function(t + dt/2, y + dt/2 * k1)
+        k3 = function(t + dt/2, y + dt/2 * k2)
+        k4 = function(t + dt, y + dt * k3)
 
-    #update array with new theta and omega
-    theta_val[i + 1] = theta + (1/6) * (k1_theta + 2*k2_theta + 2*k3_theta + k4_theta)
-    omega_val[i + 1] = omega + (1/6) * (k1_omega + 2*k2_omega + 2*k3_omega + k4_omega)
+        y_val[i] = y + (1/6) * (k1 + 2 * k2 + 2 * k3 + k4) * dt
+
+    return y_val, time_val
+
+# theta and omega arrays
+theta_val = y_val[:, 0]
+omega_val = y_val[:, 1]
+
+time_val, y_val = runga_kutta(pendulum_functions, y_0, init_time, max_time, dt)
+
+
+
+
 
 
 # Angle plot
 plt.subplot(2, 1, 1)
-plt.plot(t_values, theta_values, label='Angle (theta)', color='blue')
+plt.plot(time_val, theta_val, label='Angular Position (theta)', color='blue')
 plt.title('Pendulum Motion')
 plt.xlabel('Time (s)')
 plt.ylabel('Angular Position (radians)')
@@ -67,7 +74,7 @@ plt.legend()
 
 # Angular velocity plot
 plt.subplot(2, 1, 2)
-plt.plot(t_values, omega_values, label='Angular Velocity (omega)', color='orange')
+plt.plot(time_val, omega_val, label='Angular Velocity (omega)', color='orange')
 plt.title('Pendulum Velocity')
 plt.xlabel('Time (s)')
 plt.ylabel('Angular Velocity (rad/s)')
