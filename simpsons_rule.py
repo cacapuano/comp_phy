@@ -47,4 +47,4 @@ Work_integrated_simpson = simpsons_rule(work, a, b, interval)
 
 
 # Print the result
-print(f"Approximate work done moving the conducting sphere from {a} to {b} using Simpson's Rule: {Work_integrated_simpson:.2e} N*m/C")
+print(f"Approximate work done moving the conducting sphere from {a} to {b} using Simpson's Rule: {Work_integrated_simpson:e} N*m/C")
