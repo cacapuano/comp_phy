@@ -10,7 +10,7 @@ R = 3e-3 # radius of the sphere m
 
 #integration parameters
 a = 1 #lower limit of integration
-b = 10 #upper limit of integration
+b = 3 #upper limit of integration
 intervals = 1000 #steps
 
 #work done moving conducting sphere integral
@@ -46,5 +46,5 @@ Work_integrated = trapezoidal_rule(work, a, b, intervals)
 r_values = np.linspace(0.05, 0.5, 100)
 Work_values = [work(r) for r in r_values]
 
-print(f"Work done to move the conducting sphere from {R} m to {b} m: {Work_integrated:.2e} N*m/C")
+print(f"Work done to move the conducting sphere from {R} m to {b} m: {Work_integrated:e} N*m/C")
 
