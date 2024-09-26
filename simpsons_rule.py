@@ -7,7 +7,7 @@ q = 1e-6 # coulombs - charge of the conducting sphere
 R = 3e-3 # radius of the sphere m
 
 # Simpson's Rule parameters
-a = 1          # Start of the interval
+a = R          # Start of the interval
 b = 3          # End of the interval
 interval = 1000       # Number of subintervals (must be even)
 
@@ -20,17 +20,17 @@ def work(r):
     E_field = (k * q / r**2)**2
     return top * E_field
   
-
+# simpson's method
 def simpsons_rule(function, a, b, interval):
 
-# Ensure n is even
+# make sure each interval is even
     if interval % 2 == 1:
         interval += 1
 
-# Calculate the width of each subinterval
+# width of each subinterval
     h = (b - a) / interval
 
-# Simpson's Rule calculation
+# simpson's Rule calculation
     integral = function(a) + function(b)
 
     for i in range(1, interval, 2):
@@ -42,7 +42,7 @@ def simpsons_rule(function, a, b, interval):
     integral *= h / 3
     return integral
 
-# Integrate
+# integrate using simpson's rule
 Work_integrated_simpson = simpsons_rule(work, a, b, interval)
 
 
