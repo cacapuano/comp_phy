@@ -8,12 +8,12 @@ q = 1e-6 # coulombs - charge of the conducting sphere
 R = 3e-3 # radius of the sphere m
 
 # Riemann Sum parameters
-a = 1          # Start of the interval
+a = R          # Start of the interval
 b = 3          # End of the interval
 interval = 1000       # Number of subintervals
-delta_x = (b - a) / interval  # Width of each subinterval
+#delta_x = (b - a) / interval  # Width of each subinterval
 
-#work done moving conducting sphere integral
+# defining function to integrate over
 def work(r):
     e_0 = 8.85e-12
     top = e_0/2
@@ -21,11 +21,12 @@ def work(r):
     E_field = (k * q / r**2)**2
     return top * E_field
 
-def riemann_summ(function, a, b, interval):
-    h = (b - a) / n  # Step size
+# riemann's sum definition
+def riemann_sum(function, a, b, interval,  method = 'left'):
+    h = (b - a) / interval  # Step size
     total_area = 0
 
-    for i in range(n):
+    for i in range(interval):
         if method == 'left':
             x = a + i * h  # Left endpoint
         elif method == 'right':
@@ -35,13 +36,9 @@ def riemann_summ(function, a, b, interval):
         else:
             raise ValueError("Method must be 'left', 'right', or 'mid'")
 
-        total_area += func(x) * h  # Area of the rectangle
+        total_area += function(x) * h  # Area of the rectangle
 
     return total_area
-
-    #for i in range(1, interval + 1)
-    #    sum(function(a + i * delta_x) * delta_x
-    #return riemann_sum
 
 
 # integrate
@@ -49,7 +46,7 @@ Work_integrated_riemann = riemann_sum(work, a, b, interval, method='left')
 
 
 # Print the result
-print(f"Approximate work done moving the conducting sphere from {a} to {b}: {Work_integrated_riemann:e} N*m/C")
+print(f"Approximate work done moving the conducting sphere from {a} to {b} using Riemann's Sum: {Work_integrated_riemann:e} N*m/C")
 
 
 
