@@ -9,7 +9,7 @@ R = 3e-3 # radius of the sphere m
 
 # Riemann Sum parameters
 a = 1          # Start of the interval
-b = 10          # End of the interval
+b = 3          # End of the interval
 interval = 1000       # Number of subintervals
 delta_x = (b - a) / interval  # Width of each subinterval
 
@@ -49,7 +49,7 @@ Work_integrated_riemann = riemann_sum(work, a, b, interval, method='left')
 
 
 # Print the result
-print(f"Approximate work done moving the conducting sphere from {a} to {b}: {Work_integrated_riemann:.2e} N*m/C")
+print(f"Approximate work done moving the conducting sphere from {a} to {b}: {Work_integrated_riemann:e} N*m/C")
 
 
 
