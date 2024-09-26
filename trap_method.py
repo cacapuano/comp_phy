@@ -38,5 +38,5 @@ def trapezoidal_rule(function, a, b, intervals):
 Work_integrated_trap = trapezoidal_rule(work, a, b, intervals)
 
 # print answer
-print(f"Work done to move the conducting sphere from {R} m to {b} m: {Work_integrated_trap:e} N*m/C")
+print(f"Work done to move the conducting sphere from {a} m to {b} m using the Trapezoidal Method: {Work_integrated_trap:e} N*m/C")
 
