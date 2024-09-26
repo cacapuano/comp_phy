@@ -34,9 +34,9 @@ def trapezoidal_rule(function, a, b, intervals):
     return integral
 
 
-# Integrate using the trapezoidal rule
+# integrate using the trapezoidal rule
 Work_integrated_trap = trapezoidal_rule(work, a, b, intervals)
 
-
+# print answer
 print(f"Work done to move the conducting sphere from {R} m to {b} m: {Work_integrated_trap:e} N*m/C")
 
