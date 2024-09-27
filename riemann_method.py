@@ -22,7 +22,7 @@ def work(r):
     return top * E_field
 
 # riemann's sum definition
-def riemann_sum(function, a, b, interval,  method = 'left'):
+def riemann_sum(function, a, b, interval):
     h = (b - a) / interval  # step size
     total_area = 0
 
