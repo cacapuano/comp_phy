@@ -84,12 +84,18 @@ omega_val = y_val[:, 1]
 a_theta_val = a_y_val[:, 0]
 a_omega_val = a_y_val[:, 1]        
 
-# truncation errors
+#analytic solution
 
-#for i in time_val:
-#    truncation_errors = [a_theta_val - theta_val for i in theta_val]
-#    plt.plot(theta_val, truncation errors, label = f'i = {i}')
-# plot
+t_values = np.arange(init_time, max_time, dt)
+theta_values = init_theta * np.cos(np.sqrt(g / length) * t_values)
+omega_values = -np.sqrt(g/length)*init_theta * np.sin(np.sqrt(g / length) * t_values)
+ 
+
+# truncation error
+truncation_errors_theta = (theta_val-theta_values)
+truncation_errors_omega = (omega_val-omega_values)
+
+#plot
 
 plt.figure(figsize=(12, 6))
 
@@ -120,6 +126,28 @@ plt.tight_layout()
 plt.show()
         
 
-    
+#truncation error plot
+
+plt.figure(figsize=(12, 6))
+plt.subplot(2, 1, 1)
+
+plt.plot(time_val, truncation_errors_theta, label='Truncation Error', color='red')
+plt.title('Truncation Error of the Angular Position')
+plt.xlabel('Time (s)')
+plt.ylabel('Error (radians)')
+plt.legend()
+plt.grid()
+
+plt.subplot(2, 1, 2)
+
+plt.plot(time_val, truncation_errors_omega, label='Truncation Error', color='red')
+plt.title('Truncation Error of the Angular Velocity') 
+plt.xlabel('Time (s)')
+plt.ylabel('Error (radians/s)')
+plt.legend()
+plt.grid()
+
+plt.tight_layout()
+plt.show()
     
 
