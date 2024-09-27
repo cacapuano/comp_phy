@@ -37,6 +37,19 @@ max_time = 20 #seconds
 # calculate
 time_val, theta_val, omega_val = euler(init_theta, init_omega, init_time, max_time, dt)
 
+
+#analytic solution
+
+t_values = np.arange(init_time, max_time, dt)
+theta_values = init_theta * np.cos(np.sqrt(g / length) * t_values)
+omega_values = -np.sqrt(g/length)*init_theta * np.sin(np.sqrt(g / length) * t_values)
+ 
+
+# truncation error
+truncation_errors_theta = (theta_val-theta_values)
+truncation_errors_omega = (omega_val-omega_values)
+
+
 # Plotting the results
 plt.figure(figsize=(12, 6))
 
@@ -60,3 +73,30 @@ plt.legend()
 
 plt.tight_layout()
 plt.show()
+
+
+
+#truncation error plot
+
+plt.figure(figsize=(12, 6))
+plt.subplot(2, 1, 1)
+
+plt.plot(time_val, truncation_errors_theta, label='Truncation Error', color='red')
+plt.title('Truncation Error of the Angular Position')
+plt.xlabel('Time (s)')
+plt.ylabel('Error (radians)')
+plt.legend()
+plt.grid()
+
+plt.subplot(2, 1, 2)
+
+plt.plot(time_val, truncation_errors_omega, label='Truncation Error', color='red')
+plt.title('Truncation Error of the Angular Velocity') 
+plt.xlabel('Time (s)')
+plt.ylabel('Error (radians/s)')
+plt.legend()
+plt.grid()
+
+plt.tight_layout()
+plt.show()
+    
