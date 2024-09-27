@@ -84,8 +84,11 @@ omega_val = y_val[:, 1]
 a_theta_val = a_y_val[:, 0]
 a_omega_val = a_y_val[:, 1]        
 
+# truncation errors
 
-
+#for i in time_val:
+#    truncation_errors = [a_theta_val - theta_val for i in theta_val]
+#    plt.plot(theta_val, truncation errors, label = f'i = {i}')
 # plot
 
 plt.figure(figsize=(12, 6))
@@ -93,9 +96,9 @@ plt.figure(figsize=(12, 6))
 # angular position
 
 plt.subplot(2, 1, 1)
-plt.plot(time_val, theta_val, label='Without Air Resistance', color='orange')
-plt.plot(a_time_val, a_theta_val, label='with Air Reistance', color='blue')
-plt.title('Pendulum Motion')
+plt.plot(time_val, theta_val, label='Without Air Reistance', color='orange')
+plt.plot(a_time_val, a_theta_val, label='With Air Reistance', color='blue')
+plt.title('Approximate Motion of the Pendulum Using Runga-Kutta')
 plt.xlabel('Time (s)')
 plt.ylabel('Angular Position of the Pendulum (radians)')
 plt.grid()
@@ -106,7 +109,7 @@ plt.legend()
 plt.subplot(2, 1, 2)
 plt.plot(time_val, omega_val, label='Without Air Resistance', color='orange')
 plt.plot(a_time_val, a_omega_val, label='With Air Resistance', color='blue')
-plt.title('Pendulum Motion')
+plt.title('Approximate Velocity of the Pendulum Using Runga-Kutta')
 plt.xlabel('Time (s)')
 plt.ylabel('Angular Velocity (rad/s)')
 plt.grid()
