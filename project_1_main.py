@@ -3,6 +3,8 @@
 #import packages
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+
 
 #constants
 mass = 10 #kg; mass on the pendulum
@@ -84,7 +86,28 @@ r_theta_val = r_y_val[:, 0]
 r_omega_val = r_y_val[:, 1]
         
 
+# Find the motion of a pendulum using SciPy
+# system of equations
+def pendulum_scipy(time, y):
+    theta, omega = y
+    dydt = [omega, -g / length * np.sin(theta)]  # [dtheta/dt, domega/dt]
+    return dydt
 
+# initial conditions
+init_theta = np.pi / 4  # initial angle
+init_omega = 0.0        # initial angular velocity
+y_0_scipy = [init_theta, init_omega]
+
+time_span = (0, 10)
+time_eval = np.linspace(time_span[0], time_span[1], 10)
+    
+solution = solve_ivp(pendulum_scipy, time_span, y_0_scipy, time_eval=time_eval)
+    
+#analytic solution
+
+t_values = np.arange(init_time, max_time, dt)
+theta_values = init_theta * np.cos(np.sqrt(g / length) * t_values)
+omega_values = init_omega - np.sqrt(g/length) * init_theta * np.sin(np.sqrt(g / length) * t_values)
 
 
 # Plotting the results
@@ -94,7 +117,9 @@ plt.figure(figsize=(12, 6))
 plt.subplot(2, 1, 1)
 plt.plot(e_time_val, e_theta_val, label='Euler Method', color = 'blue')
 plt.plot(r_time_val, r_theta_val, label='Runga-Kutta', color = 'orange')
-plt.title('Pendulum Motion')
+plt.plot(solution.t, solution.y[0], label='SciPy', color='pink')
+plt.plot(t_values, theta_values, label='Analytic Solution', color = 'green')
+plt.title('Comparison of Methods for the Motion of the Pendulum')
 plt.xlabel('Time (s)')
 plt.ylabel('Angular Position (radians)')
 plt.grid()
@@ -104,7 +129,9 @@ plt.legend()
 plt.subplot(2, 1, 2)
 plt.plot(e_time_val, e_omega_val, label='Euler Method', color='blue')
 plt.plot(r_time_val, r_omega_val, label='Runga-Kutta', color='orange')
-plt.title('Pendulum Motion')
+plt.plot(solution.t, solution.y[1], label='SciPy', color='pink')
+plt.plot(t_values, omega_values, label='Analytic Solution', color = 'green')
+plt.title('Comparison of Methods for the Angular Velocity of the Pendulum')
 plt.xlabel('Time (s)')
 plt.ylabel('Angular Velocity (rad/s)')
 plt.grid()
