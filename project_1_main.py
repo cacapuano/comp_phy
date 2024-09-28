@@ -1,4 +1,4 @@
-#euler's method for a simple pendulum
+#same exact code from euler and runga files but with analytic function
 
 #import packages
 import numpy as np
@@ -42,7 +42,7 @@ e_time_val, e_theta_val, e_omega_val = euler(init_theta, init_omega, init_time, 
 
 
 # runga kutta method of intergration
-# ODE of Pendulum
+# ODE 
 def pendulum(time, position):
     theta, omega = position
     dtheta_dt = omega
@@ -71,8 +71,8 @@ def runga_kutta(function, y_0, init_time, max_time, dt):
     return r_time_val, r_y_val
 
 # initial conditions of the pendulum  
-init_theta = np.pi / 4  # Initial angle (45 degrees)
-init_omega = 0.0        # Initial angular velocity
+init_theta = np.pi / 4  # initial angle rad
+init_omega = 0.0        # initial angular velocity
 y_0 = np.array([init_theta, init_omega])
 
 init_time = 0.0  # Start time
@@ -86,7 +86,7 @@ r_theta_val = r_y_val[:, 0]
 r_omega_val = r_y_val[:, 1]
         
 
-# Find the motion of a pendulum using SciPy
+# find the motion of a pendulum using SciPy
 # system of equations
 def pendulum_scipy(time, y):
     theta, omega = y
@@ -99,15 +99,22 @@ init_omega = 0.0        # initial angular velocity
 y_0_scipy = [init_theta, init_omega]
 
 time_span = (0, 10)
-time_eval = np.linspace(time_span[0], time_span[1], 10)
     
-solution = solve_ivp(pendulum_scipy, time_span, y_0_scipy, time_eval=time_eval)
+solution = solve_ivp(pendulum_scipy, time_span, y_0_scipy)
     
 #analytic solution
 
 t_values = np.arange(init_time, max_time, dt)
 theta_values = init_theta * np.cos(np.sqrt(g / length) * t_values)
 omega_values = init_omega - np.sqrt(g/length) * init_theta * np.sin(np.sqrt(g / length) * t_values)
+
+
+# truncation error
+euler_truncation_errors_theta = (e_theta_val-theta_values)
+euler_truncation_errors_omega = (e_omega_val-omega_values)
+runga_truncation_errors_theta = (r_theta_val-theta_values)
+runga_truncation_errors_omega = (r_omega_val-omega_values)
+
 
 
 # Plotting the results
@@ -136,6 +143,32 @@ plt.xlabel('Time (s)')
 plt.ylabel('Angular Velocity (rad/s)')
 plt.grid()
 plt.legend()
+
+plt.tight_layout()
+plt.show()
+
+#truncation error plot
+
+plt.figure(figsize=(12, 6))
+plt.subplot(2, 1, 1)
+
+plt.plot(t_values, euler_truncation_errors_theta, label='Euler Truncation Error', color='blue')
+plt.plot(t_values, runga_truncation_errors_theta, label='Runga-Kutta Truncation Error', color='orange')
+plt.title('Truncation Error of the Angular Position')
+plt.xlabel('Time (s)')
+plt.ylabel('Error (radians)')
+plt.legend()
+plt.grid()
+
+plt.subplot(2, 1, 2)
+
+plt.plot(t_values, euler_truncation_errors_omega, label='Euler Truncation Error', color='blue')
+plt.plot(t_values, runga_truncation_errors_omega, label='Runga-Kutta Truncation Error', color='orange')
+plt.title('Truncation Error of the Angular Velocity')
+plt.xlabel('Time (s)')
+plt.ylabel('Error (radians/s)')
+plt.legend()
+plt.grid()  
 
 plt.tight_layout()
 plt.show()
