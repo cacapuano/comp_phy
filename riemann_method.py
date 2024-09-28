@@ -7,11 +7,11 @@ e_0 = 8.85e-12 #C^2/Nm^2 permittivity of free space
 q = 1e-6 # coulombs - charge of the conducting sphere
 R = 3e-3 # radius of the sphere m
 
-# riemann Sum parameters
-a = R          # Start of the interval
-b = 3          # End of the interval
-interval = 1000       # Number of subintervals
-#delta_x = (b - a) / interval  # Width of each subinterval
+# parameters
+a = R          # start of the interval
+b = 3          # end of the interval
+interval = 1000       # subintervals
+
 
 # defining function to integrate over
 def work(r):
@@ -28,7 +28,7 @@ def riemann_sum(function, a, b, interval):
 
     for i in range(interval):
         x = a + i * h  # using left endpoint method
-        total_area += function(x) * h  # Area of the rectangle
+        total_area += function(x) * h  # area of the rectangle
 
     return total_area
 
