@@ -6,10 +6,10 @@ e_0 = 8.85e-12 #C^2/Nm^2 permittivity of free space
 q = 1e-6 # coulombs - charge of the conducting sphere
 R = 3e-3 # radius of the sphere m
 
-# Simpson's Rule parameters
-a = R          # Start of the interval
-b = 3          # End of the interval
-interval = 1000       # Number of subintervals (must be even)
+# parameters
+a = R          # start of the interval
+b = 3          # end of the interval
+interval = 1000       # subintervals
 
 
 #work done moving conducting sphere integral
