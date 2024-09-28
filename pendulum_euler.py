@@ -24,15 +24,15 @@ def euler(init_theta, init_omega, init_time, max_time, dt):
     omega_val[0] = init_omega
 
     for i in range(1, steps):
-        time_val[i] = time_val[i - 1] + dt 
-        theta_val[i] = theta_val[i - 1] + omega_val[i - 1] * dt
-        omega_val[i] = omega_val[i - 1] - (g / length) * np.sin(theta_val[i - 1]) * dt
+        time_val[i] = time_val[i - 1] + dt #time function 
+        theta_val[i] = theta_val[i - 1] + omega_val[i - 1] * dt #theta functions
+        omega_val[i] = omega_val[i - 1] - (g / length) * np.sin(theta_val[i - 1]) * dt # omega function
 
     return time_val, theta_val, omega_val
 
 #time parameters
 dt = 0.01
-max_time = 20 #seconds
+max_time = 10 #seconds
 
 # calculate
 time_val, theta_val, omega_val = euler(init_theta, init_omega, init_time, max_time, dt)
