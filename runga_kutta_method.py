@@ -9,9 +9,9 @@ length = 1.0   # length of the pendulum m
 
 # ODE of Pendulum
 def pendulum(time, position):
-    theta, omega = position
-    dtheta_dt = omega
-    domega_dt = - (g / length) * np.sin(theta)
+    theta, omega = position #creating vector that combines theta and omega
+    dtheta_dt = omega #theta derivative
+    domega_dt = - (g / length) * np.sin(theta) #omega derivative
     return np.array([dtheta_dt, domega_dt])
 
 def pendulum_air_resistance(time, position):
@@ -24,7 +24,7 @@ def pendulum_air_resistance(time, position):
 
 # runga-Kutta
 def runga_kutta(function, y_0, init_time, max_time, dt):
-    time_val = np.arange(init_time, max_time, dt)
+    time_val = np.arange(init_time, max_time, dt) #total time of simulation
     y_val = np.zeros( (len(time_val), len(y_0)))
     y_val[0] = y_0
 
@@ -66,21 +66,24 @@ def a_runga_kutta(function, y_0, init_time, max_time, dt):
 
 
 # initial conditions of the pendulum  
-init_theta = np.pi / 4  # Initial angle (45 degrees)
-init_omega = 0.0        # Initial angular velocity
+init_theta = np.pi / 4  # Initial angle (45 degrees but actual units are radians)
+init_omega = 0.0        # Initial angular velocity rad/s
 y_0 = np.array([init_theta, init_omega])
 
-init_time = 0.0  # Start time
-max_time = 10.0  # End time
-dt = 0.01  # Time step
+init_time = 0.0  # start time
+max_time = 10.0  # end time
+dt = 0.01  # time step
 
-time_val, y_val = runga_kutta(pendulum, y_0, init_time, max_time, dt)
+time_val, y_val = runga_kutta(pendulum, y_0, init_time, max_time, dt) # no air resistance
 
-a_time_val, a_y_val = a_runga_kutta(pendulum_air_resistance, y_0, init_time, max_time, dt)
+a_time_val, a_y_val = a_runga_kutta(pendulum_air_resistance, y_0, init_time, max_time, dt) #air resistance
 
 # breaking up array
+# no air resistance
 theta_val = y_val[:, 0]
 omega_val = y_val[:, 1]
+
+# air resistance
 a_theta_val = a_y_val[:, 0]
 a_omega_val = a_y_val[:, 1]        
 
